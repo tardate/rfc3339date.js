@@ -26,41 +26,30 @@ Date.parseISO8601 = function(dString){
   var regexp = /(\d\d\d\d)(-)?(\d\d)(-)?(\d\d)(T)?(\d\d)(:)?(\d\d)?(:)?(\d\d)?([\.,]\d+)?($|Z|([+-])(\d\d)(:)?(\d\d)?)/i;
   var d = dString.match(new RegExp(regexp));
   if (d) {
-    var offset = 0;
-    result = new Date();
-
+    var year = parseInt(d[1],10);
+    var mon = parseInt(d[3],10) - 1;
+    var day = parseInt(d[5],10);
+    var hour = parseInt(d[7],10);
+    var mins = ( d[9] ? parseInt(d[9],10) : 0 );
+    var secs = ( d[11] ? parseInt(d[11],10) : 0 );
+    var millis = ( d[12] ? parseFloat(String(1.5).charAt(1) + d[12].slice(1)) * 1000 : 0 );
     if (d[13]) {
-      result.setUTCFullYear(parseInt(d[1],10));
-      result.setUTCMonth(parseInt(d[3],10) - 1);
-      result.setUTCDate(parseInt(d[5],10));
-      result.setUTCHours(parseInt(d[7],10));
-      var mins = ( d[9] ? parseInt(d[9],10) : 0 );
+      result = new Date();
+      result.setUTCFullYear(year);
+      result.setUTCMonth(mon);
+      result.setUTCDate(day);
+      result.setUTCHours(hour);
       result.setUTCMinutes(mins);
-      var secs = ( d[11] ? parseInt(d[11],10) : 0 );
       result.setUTCSeconds(secs);
-      if (d[12]) {
-        var decimalSeperator = String(1.5).charAt(1);
-        result.setUTCMilliseconds(parseFloat(decimalSeperator + d[12].slice(1)) * 1000);
-      } else
-        result.setUTCMilliseconds(0);
-
+      result.setUTCMilliseconds(millis);
       if (d[13] && d[14]) {
-        offset = (d[15] * 60) 
+        var offset = (d[15] * 60) 
         if (d[17]) offset += parseInt(d[17],10);
         offset *= ((d[14] == '-') ? -1 : 1);
         result.setTime(result.getTime() - offset * 60 * 1000);
       }
     } else {
-      result.setFullYear(parseInt(d[1],10));
-      result.setMonth(parseInt(d[3],10) - 1);
-      result.setDate(parseInt(d[5],10));
-      result.setHours(parseInt(d[7],10));
-      result.setMinutes(parseInt(d[9],10));
-      result.setSeconds(parseInt(d[11],10));
-      if (d[12])
-        result.setMilliseconds(parseFloat(d[12]) * 1000);
-      else
-        result.setMilliseconds(0);
+      result = new Date(year,mon,day,hour,mins,secs,millis);
     }
   }
   return result;

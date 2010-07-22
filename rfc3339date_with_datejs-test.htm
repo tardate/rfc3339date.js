@@ -88,14 +88,7 @@
     testBasicLocaltime: function() {  with(this) {
       var sourceString = "2010-07-20T15:00:00";
       var actual = Date.parse( sourceString );
-      var expected = new Date();
-      expected.setFullYear(2010);
-      expected.setMonth(7 - 1);
-      expected.setDate(20);
-      expected.setHours(15);
-      expected.setMinutes(0);
-      expected.setSeconds(0);
-      expected.setMilliseconds(0);  
+      var expected = new Date(2010, 7-1 , 20, 15, 0, 0, 0);  
       assertEqual( expected.toString(), actual.toString(), "incorrect conversion of: '" + sourceString + "'" );
     }},
       
@@ -197,7 +190,7 @@
       assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
     }},
 
-    testOptionalMinutes: function() {  with(this) {
+    testUTCOptionalMinutes: function() {  with(this) {
       var sourceString = "2010-07-20T15Z";
       var actual = Date.parse( sourceString );
       var expected = new Date();
@@ -211,7 +204,7 @@
       assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
     }},
       
-    testOptionalSeconds: function() {  with(this) {
+    testUTCOptionalSeconds: function() {  with(this) {
       var sourceString = "2010-07-20T15:30Z";
       var actual = Date.parse( sourceString );
       var expected = new Date();
@@ -222,6 +215,20 @@
       expected.setUTCMinutes(30);
       expected.setUTCSeconds(0);
       expected.setUTCMilliseconds(0); 
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+
+    testLocaltimeOptionalMinutes: function() {  with(this) {
+      var sourceString = "2010-07-20T15";
+      var actual = Date.parse( sourceString );
+      var expected = new Date(2010, 7-1 , 20, 15, 0, 0, 0); 
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+
+    testLocaltimeOptionalSeconds: function() {  with(this) {
+      var sourceString = "2010-07-20T1530";
+      var actual = Date.parse( sourceString );
+      var expected = new Date(2010, 7-1 , 20, 15, 30, 0, 0); 
       assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
     }},
 
