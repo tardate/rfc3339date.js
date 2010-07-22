@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+    <title>rfc3339date.js - Unit Tests</title>
+    <meta name="description" content="Adds ISO 8601 / RFC 3339 date parsing to the Javascript Date object"/>
+    <meta name="keywords"    content="javascript,date,rfc2229,ISO8601"/>
+    
+    <!-- START: for jsunittest -->
+    <script src="unit_test_assets/jsunittest.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="unit_test_assets/unittest.css" type="text/css" />
+    <!-- END: for jsunittest -->
+    
+    <!-- START: for datejs -->
+    <script src="unit_test_assets/libs/date.js" type="text/javascript"></script>
+    <!-- END: for datejs -->
+    
+    <!-- START: for rfc3339date -->
+    <script src="rfc3339date.js" type="text/javascript"></script>
+    <!-- END: for jtab -->
+
+
+  </head>
+  <body>
+
+<div id="content">
+
+  <div id="header">
+    <h1>rfc3339date - Javascript ISO 8601 / RFC 3339 date parsing</h1>
+    <p>
+      This file tests compatibility of <strong>rfc3339date.js</strong> with <a href="http://www.datejs.com/">datejs</a>.
+    </p>
+  </div>
+
+  <!-- Log output (one per Runner, via {testLog: "testlog"} option)-->
+  <div id="testlog"></div>
+  
+  <!-- Put sample/test html here -->
+  <div id="sample">
+  </div>
+</div>
+
+
+<script type="text/javascript">
+// <![CDATA[
+  
+  new Test.Unit.Runner({
+    setup: function() {
+    },
+    
+    teardown: function() {
+    },
+    
+    testUnitTestFrameworkOperational: function() { with(this) {
+      assert(true);
+    }},
+
+    testFallbackOnStandardParse: function() {  with(this) {
+      var sourceString = "Jul 8, 2005";
+      var actual = new Date(Date.parse( sourceString ));
+      var expected = new Date();
+      expected.setFullYear(2005);
+      expected.setMonth(7 - 1);
+      expected.setDate(8);
+      expected.setHours(0);
+      expected.setMinutes(0);
+      expected.setSeconds(0);
+      expected.setMilliseconds(0);  
+      assertEqual( expected.toString(), actual.toString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+
+    testBasicUTC: function() {  with(this) {
+      var sourceString = "2010-07-20T15:00:00Z";
+      var resultDate = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setUTCFullYear(2010);
+      expected.setUTCMonth(7 - 1);
+      expected.setUTCDate(20);
+      expected.setUTCHours(15);
+      expected.setUTCMinutes(0);
+      expected.setUTCSeconds(0);
+      expected.setUTCMilliseconds(0);  
+      assertEqual( expected.toUTCString(), resultDate.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+
+    testBasicLocaltime: function() {  with(this) {
+      var sourceString = "2010-07-20T15:00:00";
+      var actual = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setFullYear(2010);
+      expected.setMonth(7 - 1);
+      expected.setDate(20);
+      expected.setHours(15);
+      expected.setMinutes(0);
+      expected.setSeconds(0);
+      expected.setMilliseconds(0);  
+      assertEqual( expected.toString(), actual.toString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+      
+    testBasicLocaltimeWithZone: function() {  with(this) {
+      var sourceString = "2010-07-20T15:00:00+08:00";
+      var actual = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setUTCFullYear(2010);
+      expected.setUTCMonth(7 - 1);
+      expected.setUTCDate(20);
+      expected.setUTCHours(7);
+      expected.setUTCMinutes(0);
+      expected.setUTCSeconds(0);
+      expected.setUTCMilliseconds(0); 
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+
+    testAbbreviateZoneNoColon: function() {  with(this) {
+      var sourceString = "2010-07-20T15:00:00+0800";
+      var actual = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setUTCFullYear(2010);
+      expected.setUTCMonth(7 - 1);
+      expected.setUTCDate(20);
+      expected.setUTCHours(7);
+      expected.setUTCMinutes(0);
+      expected.setUTCSeconds(0);
+      expected.setUTCMilliseconds(0); 
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+      
+    testAbbreviateZoneOnlyHours: function() {  with(this) {
+      var sourceString = "2010-07-20T15:00:00+08";
+      var actual = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setUTCFullYear(2010);
+      expected.setUTCMonth(7 - 1);
+      expected.setUTCDate(20);
+      expected.setUTCHours(7);
+      expected.setUTCMinutes(0);
+      expected.setUTCSeconds(0);
+      expected.setUTCMilliseconds(0); 
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+
+    testAbbreviateUTCNoPunctuation: function() {  with(this) {
+      var sourceString = "20100720T150000Z";
+      var resultDate = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setUTCFullYear(2010);
+      expected.setUTCMonth(7 - 1);
+      expected.setUTCDate(20);
+      expected.setUTCHours(15);
+      expected.setUTCMinutes(0);
+      expected.setUTCSeconds(0);
+      expected.setUTCMilliseconds(0);  
+      assertEqual( expected.toUTCString(), resultDate.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+      
+    testNotCaseSensitive: function() {  with(this) {
+      var sourceString = "20100720t150000z";
+      var resultDate = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setUTCFullYear(2010);
+      expected.setUTCMonth(7 - 1);
+      expected.setUTCDate(20);
+      expected.setUTCHours(15);
+      expected.setUTCMinutes(0);
+      expected.setUTCSeconds(0);
+      expected.setUTCMilliseconds(0);  
+      assertEqual( expected.toUTCString(), resultDate.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+
+    testFractionalSeconds: function() {  with(this) {
+      var sourceString = "2010-07-20T15:00:00.559Z";
+      var actual = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setUTCFullYear(2010);
+      expected.setUTCMonth(7 - 1);
+      expected.setUTCDate(20);
+      expected.setUTCHours(15);
+      expected.setUTCMinutes(0);
+      expected.setUTCSeconds(0);
+      expected.setUTCMilliseconds(559); 
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+      
+    testFractionalSecondsAlternateSeparator: function() {  with(this) {
+      var sourceString = "2010-07-20T15:00:00,559Z";
+      var actual = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setUTCFullYear(2010);
+      expected.setUTCMonth(7 - 1);
+      expected.setUTCDate(20);
+      expected.setUTCHours(15);
+      expected.setUTCMinutes(0);
+      expected.setUTCSeconds(0);
+      expected.setUTCMilliseconds(559); 
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+
+    testOptionalMinutes: function() {  with(this) {
+      var sourceString = "2010-07-20T15Z";
+      var actual = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setUTCFullYear(2010);
+      expected.setUTCMonth(7 - 1);
+      expected.setUTCDate(20);
+      expected.setUTCHours(15);
+      expected.setUTCMinutes(0);
+      expected.setUTCSeconds(0);
+      expected.setUTCMilliseconds(0); 
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+      
+    testOptionalSeconds: function() {  with(this) {
+      var sourceString = "2010-07-20T15:30Z";
+      var actual = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setUTCFullYear(2010);
+      expected.setUTCMonth(7 - 1);
+      expected.setUTCDate(20);
+      expected.setUTCHours(15);
+      expected.setUTCMinutes(30);
+      expected.setUTCSeconds(0);
+      expected.setUTCMilliseconds(0); 
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
+    }},
+
+    testDatejsMonthAndYearFormat: function() {  with(this) {
+      var sourceString = "July 2008";
+      var actual = Date.parse( sourceString );
+      var expected = new Date(2008, 7-1 , 1, 0, 0, 0, 0);
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "datejs parse method probably not invoked correctly to convert: '" + sourceString + "'" );
+    }},
+
+    testDatejsVerboseFormat: function() {  with(this) {
+      var sourceString = "February 20th 1973";
+      var actual = Date.parse( sourceString );
+      var expected = new Date(1973, 2-1 , 20, 0, 0, 0, 0);
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "datejs parse method probably not invoked correctly to convert: '" + sourceString + "'" );
+    }},
+
+    testDatejsRelativeFormat: function() {  with(this) {
+      var sourceString = "t + 5 d";
+      var actual = Date.parse( sourceString );
+      var expected = new Date();
+      expected.setHours(0);expected.setMinutes(0);expected.setSeconds(0);expected.setMilliseconds(0);
+      expected.setTime( expected.getTime() + 5 * 24 * 60 *  60 * 1000 );
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "datejs parse method probably not invoked correctly to convert: '" + sourceString + "'" );
+    }},      
+      
+  }); 
+// ]]>
+</script>
+
+  </body>
+</html>

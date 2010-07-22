@@ -16,8 +16,8 @@ rfc3339date.js is my attempt at rolling the best into an unobtrusive Date extens
 that also plays well with other libraries that also extend the Date class. 
 
 == Obtaining
- rfc3339date.js is hosted on [http://github.com/tardate/rfc3339date.js]
- Downloads available from [http://github.com/tardate/rfc3339date.js/downloads]
+rfc3339date.js is hosted on [http://github.com/tardate/rfc3339date.js]
+Downloads available from [http://github.com/tardate/rfc3339date.js/downloads]
 
 == Usage
 
@@ -35,7 +35,7 @@ When using Date.parse, date strings that do not match ISO 8601 / RFC 3339 will
 fall through to the default Date.parse implamentation:
 
    var d = Date.parse( "Jul 9, 2010" );
-   // NB: if handled by the default Javascript Date.parse implementaitn, this
+   // NB: if handled by the default Javascript Date.parse implementation, this
    // will return the number of milliseconds since midnight of January 1, 1970
 
 
@@ -70,6 +70,16 @@ Tested for compatibilty/coexistence with:
 If you are loading any javascript library that also overloads the Date.parse method,
 it is recommended that you load rfc3339date.js LAST. Any dates that rfc3339date cannot
 understand will be passed through to underlying Date.parse implementation. 
+
+== Files in the Distribution
+
+* rfc3339date.js - main javascript source file; all you need to run with
+
+* MIT-LICENSE - official license file
+* README.rdoc - this help file
+* rfc3339date-test.htm - main unit test for core functionality
+* rfc3339date_with_datejs-test.htm - unit test to verify compatibility when used with datejs
+* unit_test_assets/ - files only needed to support the unit tests
 
 
 == Kudos and Copyright
