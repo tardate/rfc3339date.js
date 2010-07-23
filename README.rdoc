@@ -7,17 +7,19 @@ References:
 * {RFC 3339}[http://www.ietf.org/rfc/rfc3339.txt]
 
 == The Problem
-Many server-side languages emit RFC3339 date formats (e.g. Ruby and Python JSON encoders) 
-but the standard Javascript Date object cannot parse these values, making client-side scripting
-involving dates a pain.
+Many server-side languages (e.g. Ruby and Python JSON encoders) 
+and data transfer formats ( e.g. {ATOM}[ http://en.wikipedia.org/wiki/Atom_%28standard%29])
+emit {RFC 3339}[http://www.ietf.org/rfc/rfc3339.txt] / {ISO 8601}[http://en.wikipedia.org/wiki/ISO_8601]
+date formats but the standard Javascript Date object cannot parse these values,
+making client-side scripting involving dates a pain.
 
 There have been snippets of code floating around the net for ages.
 rfc3339date.js is my attempt at rolling the best into an unobtrusive Date extension
 that also plays well with other libraries that also extend the Date class. 
 
 == Obtaining
-rfc3339date.js is hosted on [http://github.com/tardate/rfc3339date.js]
-Downloads available from [http://github.com/tardate/rfc3339date.js/downloads]
+rfc3339date.js is hosted on {github}[http://github.com/tardate/rfc3339date.js], 
+with downloads available from [http://github.com/tardate/rfc3339date.js/downloads].
 
 == Usage
 
@@ -42,19 +44,19 @@ fall through to the default Date.parse implamentation:
 == Supported Date Formats
 
 * The default UTC represention: 2010-07-20T15:00:00Z
+* Dates with timezone offset are handled correctly: 2010-07-20T15:00:00+08:00
+* Without timezone, local time is assumed: 2010-07-20T15:00:00
 * Minutes and seconds are optional: 2010-07-20T15Z
 * Fractional seconds supported: 2010-07-20T15:00:00.559Z
 * Alternate fractional seconds separator as allowed by ISO 8601: 2010-07-20T15:00:00,559Z
 * Separators are optional: 20100720T150000Z
 * Not case-sensitive: 2010-07-20t15:00:00z
-* Dates with timezone offset are handled correctly: 2010-07-20T15:00:00+08:00
-* Without timezone, local time is assumed: 2010-07-20T15:00:00
 
 
 == Limitations
 
-* ISO 8601 Durations (e.g. P0003-06-04T12:30:05), 
-* ISO 8601 Time intervals (e.g. 2007-03-01T13:00:00Z/2008-05-11T15:30:00Z)
+* ISO 8601 Durations (e.g. P0003-06-04T12:30:05) are not supported 
+* ISO 8601 Time intervals (e.g. 2007-03-01T13:00:00Z/2008-05-11T15:30:00Z) are not supported
 * ISO 8601 Repeating intervals (e.g. R5/2008-03-01T13:00:00Z/P1Y2M10DT2H30M) are not supported
 * ISO 8601 Ordinal dates (e.g. YYYY-DDD) are not supported
 * ISO Week Dates (e.g. YYYY-Www) are not supported
@@ -83,7 +85,7 @@ understand will be passed through to underlying Date.parse implementation.
 
 
 == Kudos and Copyright
- Inspired by http://dansnetwork.com/2008/11/01/javascript-iso8601rfc3339-date-parser/
+Inspired by http://dansnetwork.com/2008/11/01/javascript-iso8601rfc3339-date-parser/
 
- Copyright (c) 2010 Paul GALLAGHER [http://tardate.com]
- Licensed under the MIT license: [http://www.opensource.org/licenses/mit-license.php]
+Copyright (c) 2010 Paul GALLAGHER [http://tardate.com]
+Licensed under the MIT license: [http://www.opensource.org/licenses/mit-license.php]
