@@ -8,7 +8,7 @@ References:
 
 == The Problem
 Many server-side languages (e.g. Ruby and Python JSON encoders) 
-and data transfer formats ( e.g. {ATOM}[ http://en.wikipedia.org/wiki/Atom_%28standard%29])
+and data transfer formats ( e.g. {ATOM}[http://en.wikipedia.org/wiki/Atom_%28standard%29] )
 emit {RFC 3339}[http://www.ietf.org/rfc/rfc3339.txt] / {ISO 8601}[http://en.wikipedia.org/wiki/ISO_8601]
 date formats but the standard Javascript Date object cannot parse these values,
 making client-side scripting involving dates a pain.
