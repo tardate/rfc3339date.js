@@ -23,9 +23,9 @@ with downloads available from [http://github.com/tardate/rfc3339date.js/download
 
 == Usage
 
-The parseISO8601 class method provides direct access to the date parser:
+The parseRFC3339 class method provides direct access to the date parser:
   
-   var d = Date.parseISO8601( "2010-07-20T15:00:00Z" );
+   var d = Date.parseRFC3339( "2010-07-20T15:00:00Z" );
    // d is a Date object
    
 Alternatively (and preferably), use the standard Date.parse method:
@@ -39,6 +39,16 @@ fall through to the default Date.parse implamentation:
    var d = Date.parse( "Jul 9, 2010" );
    // NB: if handled by the default Javascript Date.parse implementation, this
    // will return the number of milliseconds since midnight of January 1, 1970
+
+Two methods are provided for formating dates as ISO 8601 / RFC 3339 date strings:
+toRFC3339UTCString converts to UTC format, and toRFC3339LocaleString converts with
+the current locale/timezone.
+
+   var d = Date.parse( "2010-07-20T15:00:00Z" );
+   d.toRFC3339UTCString();
+    => "2010-07-20T15:00:00Z"
+   d.toRFC3339LocaleString();
+    => "2010-07-20T23:00:00+08:00"  // assuming current timezone is GMT+8
 
 
 == Supported Date Formats
