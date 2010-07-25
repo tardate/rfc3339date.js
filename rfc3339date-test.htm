@@ -227,7 +227,21 @@
       var expected = new Date(2010, 7-1 , 20, 15, 30, 0, 0); 
       assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
     }},
-      
+
+    testBasicFormatUTC: function() {  with(this) {
+      var expected = "2010-07-20T15:00:00Z";
+      var resultDate = new Date();
+      resultDate.setUTCFullYear(2010);
+      resultDate.setUTCMonth(7 - 1);
+      resultDate.setUTCDate(20);
+      resultDate.setUTCHours(15);
+      resultDate.setUTCMinutes(0);
+      resultDate.setUTCSeconds(0);
+      resultDate.setUTCMilliseconds(0);  
+      assertEqual( expected, resultDate.formatISO8601(), "incorrect formatISO8601 format" );
+    }},
+
+            
   }); 
 // ]]>
 </script>

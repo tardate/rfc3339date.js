@@ -15,6 +15,29 @@
  * 
  */
 
+Number.prototype.toPaddedString = function(len , fillchar) {
+  var result = this.toString();
+  if(typeof(fillchar) == 'undefined'){ fillchar = '0' };
+  while(result.length < len){ result = fillchar + result; };
+  return result;
+}
+
+
+Date.prototype.formatISO8601 = function(){
+  var result = this.getUTCFullYear().toString();
+  result += '-' + (this.getUTCMonth() + 1).toPaddedString(2);
+  result += '-' + this.getUTCDate().toPaddedString(2);
+  result += 'T' + this.getUTCHours().toPaddedString(2);
+  result += ':' + this.getUTCMinutes().toPaddedString(2);
+  result += ':' + this.getUTCSeconds().toPaddedString(2);
+  if(this.getUTCMilliseconds()>0) result += '.' + this.getUTCMilliseconds().toPaddedString(3);
+  return result + 'Z';
+}
+
+
+Date.prototype.formatLocalISO8601 = function(){
+}
+
  /* 
  * Date.parseISO8601
  * extend Date with a method parsing ISO8601 / RFC 3339 date strings.
