@@ -15,6 +15,10 @@
  * 
  */
 
+/* 
+ * Number.prototype.toPaddedString
+ * Number instance method used to left-pad numbers to the specified length  
+ */
 Number.prototype.toPaddedString = function(len , fillchar) {
   var result = this.toString();
   if(typeof(fillchar) == 'undefined'){ fillchar = '0' };
@@ -22,7 +26,12 @@ Number.prototype.toPaddedString = function(len , fillchar) {
   return result;
 }
 
-
+/* 
+ * Date.prototype.formatISO8601
+ * Date instance method to format the date as ISO8601 / RFC 3339 string (in UTC format).
+ * Usage: var d = new Date().formatISO8601(); 
+ *              => "2010-07-25T11:51:31.427Z"
+ */
 Date.prototype.formatISO8601 = function(){
   var result = this.getUTCFullYear().toString();
   result += '-' + (this.getUTCMonth() + 1).toPaddedString(2);
@@ -34,11 +43,28 @@ Date.prototype.formatISO8601 = function(){
   return result + 'Z';
 }
 
-
+/* 
+ * Date.prototype.formatISO8601
+ * Date instance method to format the date as ISO8601 / RFC 3339 string (in local timezone format).
+ * Usage: var d = new Date().formatLocalISO8601(); 
+ *              => "2010-07-25T19:51:31.427+08:00"
+ */
 Date.prototype.formatLocalISO8601 = function(){
+  var result = this.getFullYear().toString();
+  result += '-' + (this.getMonth() + 1).toPaddedString(2);
+  result += '-' + this.getDate().toPaddedString(2);
+  result += 'T' + this.getHours().toPaddedString(2);
+  result += ':' + this.getMinutes().toPaddedString(2);
+  result += ':' + this.getSeconds().toPaddedString(2);
+  if(this.getMilliseconds()>0) result += '.' + this.getMilliseconds().toPaddedString(3);
+  var tzOffset = -this.getTimezoneOffset();
+  result += ( tzOffset<0 ? '-' : '+' )
+  result += (tzOffset/60).toPaddedString(2);
+  result += ':' + (tzOffset%60).toPaddedString(2);
+  return result;
 }
 
- /* 
+/* 
  * Date.parseISO8601
  * extend Date with a method parsing ISO8601 / RFC 3339 date strings.
  * Usage: var d = Date.parseISO8601( "2010-07-20T15:00:00Z" ); 

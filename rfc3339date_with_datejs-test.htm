@@ -245,6 +245,15 @@
       assertEqual( expected, resultDate.formatISO8601(), "incorrect formatISO8601 format" );
     }},
 
+    testBasicFormatLocal: function() {  with(this) {
+      // it is a bit tricky to test this in a way that works in any time zone, 
+      // so we are testing that parsing the formated date should get you back the original date
+      var expected = new Date(2010, 7-1 , 20, 15, 0, 0, 0);   
+      var resultLocalISO8601 = expected.formatLocalISO8601();
+      var resultReconstituted = Date.parse( resultLocalISO8601 );
+      assertEqual( expected.toUTCString(), resultReconstituted.toUTCString(), "incorrect formatLocalISO8601 format" );
+    }},
+
     testDatejsMonthAndYearFormat: function() {  with(this) {
       var sourceString = "July 2008";
       var actual = Date.parse( sourceString );

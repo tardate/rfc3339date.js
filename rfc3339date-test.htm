@@ -230,18 +230,26 @@
 
     testBasicFormatUTC: function() {  with(this) {
       var expected = "2010-07-20T15:00:00Z";
-      var resultDate = new Date();
-      resultDate.setUTCFullYear(2010);
-      resultDate.setUTCMonth(7 - 1);
-      resultDate.setUTCDate(20);
-      resultDate.setUTCHours(15);
-      resultDate.setUTCMinutes(0);
-      resultDate.setUTCSeconds(0);
-      resultDate.setUTCMilliseconds(0);  
-      assertEqual( expected, resultDate.formatISO8601(), "incorrect formatISO8601 format" );
+      var actual = new Date();
+      actual.setUTCFullYear(2010);
+      actual.setUTCMonth(7 - 1);
+      actual.setUTCDate(20);
+      actual.setUTCHours(15);
+      actual.setUTCMinutes(0);
+      actual.setUTCSeconds(0);
+      actual.setUTCMilliseconds(0);  
+      assertEqual( expected, actual.formatISO8601(), "incorrect formatISO8601 format" );
     }},
 
-            
+    testBasicFormatLocal: function() {  with(this) {
+      // it is a bit tricky to test this in a way that works in any time zone, 
+      // so we are testing that parsing the formated date should get you back the original date
+      var expected = new Date(2010, 7-1 , 20, 15, 0, 0, 0);   
+      var resultLocalISO8601 = expected.formatLocalISO8601();
+      var resultReconstituted = Date.parse( resultLocalISO8601 );
+      assertEqual( expected.toUTCString(), resultReconstituted.toUTCString(), "incorrect formatLocalISO8601 format" );
+    }},
+                 
   }); 
 // ]]>
 </script>
