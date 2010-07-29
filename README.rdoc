@@ -50,6 +50,25 @@ the current locale/timezone.
    d.toRFC3339LocaleString();
     => "2010-07-20T23:00:00+08:00"  // assuming current timezone is GMT+8
 
+You can supress date/time formating in the toRFC3339 methods by passing a first parameter:
+
+   var d = Date.parse( "2010-07-20T15:00:00.333Z" );
+   d.toRFC3339UTCString();
+    => "2010-07-20T15:00:00.333Z"
+   d.toRFC3339UTCString(true);
+    => "20100720T150000.333Z"
+   d.toRFC3339LocaleString(true);
+    => "20100720T230000.333+0800"  // assuming current timezone is GMT+8
+
+You can also supress millisecond display in the toRFC3339 methods by passing a second parameter:
+
+   var d = Date.parse( "2010-07-20T15:00:00.333Z" );
+   d.toRFC3339UTCString();
+    => "2010-07-20T15:00:00.333Z"
+   d.toRFC3339UTCString(true,true);
+    => "20100720T150000Z"
+   d.toRFC3339LocaleString(true,true);
+    => "20100720T230000+0800"  // assuming current timezone is GMT+8
 
 == Supported Date Formats
 

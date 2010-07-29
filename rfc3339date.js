@@ -71,7 +71,7 @@ Date.prototype.toRFC3339LocaleString = function(supressFormating , supressMillis
   var tzOffset = -this.getTimezoneOffset();
   result += ( tzOffset<0 ? '-' : '+' )
   result += (tzOffset/60).toPaddedString(2);
-  result += ':' + (tzOffset%60).toPaddedString(2);
+  result += tSep + (tzOffset%60).toPaddedString(2);
   return result;
 }
 
