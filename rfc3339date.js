@@ -18,7 +18,7 @@
 /* 
  * Number.prototype.toPaddedString
  * Number instance method used to left-pad numbers to the specified length 
- * Used by the Date.prototype.toRFC3339XXX methods 
+ * Used by the Date.prototype.toRFC3339XXX methods
  */
 Number.prototype.toPaddedString = function(len , fillchar) {
   var result = this.toString();
@@ -30,34 +30,44 @@ Number.prototype.toPaddedString = function(len , fillchar) {
 /* 
  * Date.prototype.toRFC3339UTCString
  * Date instance method to format the date as ISO8601 / RFC 3339 string (in UTC format).
- * Usage: var d = new Date().formatISO8601(); 
+ * Usage: var d = new Date().toRFC3339UTCString(); 
  *              => "2010-07-25T11:51:31.427Z"
+ * Parameters:
+ *  supressFormating : if supplied and 'true', will force to remove date/time separators
+ *  supressMillis : if supplied and 'true', will force not to include milliseconds
  */
-Date.prototype.toRFC3339UTCString = function(){
+Date.prototype.toRFC3339UTCString = function(supressFormating , supressMillis){
+  var dSep = ( supressFormating ? '' : '-' );
+  var tSep = ( supressFormating ? '' : ':' );
   var result = this.getUTCFullYear().toString();
-  result += '-' + (this.getUTCMonth() + 1).toPaddedString(2);
-  result += '-' + this.getUTCDate().toPaddedString(2);
+  result += dSep + (this.getUTCMonth() + 1).toPaddedString(2);
+  result += dSep + this.getUTCDate().toPaddedString(2);
   result += 'T' + this.getUTCHours().toPaddedString(2);
-  result += ':' + this.getUTCMinutes().toPaddedString(2);
-  result += ':' + this.getUTCSeconds().toPaddedString(2);
-  if(this.getUTCMilliseconds()>0) result += '.' + this.getUTCMilliseconds().toPaddedString(3);
+  result += tSep + this.getUTCMinutes().toPaddedString(2);
+  result += tSep + this.getUTCSeconds().toPaddedString(2);
+  if((!supressMillis)&&(this.getUTCMilliseconds()>0)) result += '.' + this.getUTCMilliseconds().toPaddedString(3);
   return result + 'Z';
 }
 
 /* 
  * Date.prototype.toRFC3339LocaleString
  * Date instance method to format the date as ISO8601 / RFC 3339 string (in local timezone format).
- * Usage: var d = new Date().formatLocalISO8601(); 
+ * Usage: var d = new Date().toRFC3339LocaleString(); 
  *              => "2010-07-25T19:51:31.427+08:00"
+ * Parameters:
+ *  supressFormating : if supplied and 'true', will force to remove date/time separators
+ *  supressMillis : if supplied and 'true', will force not to include milliseconds
  */
-Date.prototype.toRFC3339LocaleString = function(){
+Date.prototype.toRFC3339LocaleString = function(supressFormating , supressMillis){
+  var dSep = ( supressFormating ? '' : '-' );
+  var tSep = ( supressFormating ? '' : ':' );
   var result = this.getFullYear().toString();
-  result += '-' + (this.getMonth() + 1).toPaddedString(2);
-  result += '-' + this.getDate().toPaddedString(2);
+  result += dSep + (this.getMonth() + 1).toPaddedString(2);
+  result += dSep + this.getDate().toPaddedString(2);
   result += 'T' + this.getHours().toPaddedString(2);
-  result += ':' + this.getMinutes().toPaddedString(2);
-  result += ':' + this.getSeconds().toPaddedString(2);
-  if(this.getMilliseconds()>0) result += '.' + this.getMilliseconds().toPaddedString(3);
+  result += tSep + this.getMinutes().toPaddedString(2);
+  result += tSep + this.getSeconds().toPaddedString(2);
+  if((!supressMillis)&&(this.getMilliseconds()>0)) result += '.' + this.getMilliseconds().toPaddedString(3);
   var tzOffset = -this.getTimezoneOffset();
   result += ( tzOffset<0 ? '-' : '+' )
   result += (tzOffset/60).toPaddedString(2);

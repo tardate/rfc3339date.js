@@ -241,6 +241,71 @@
       assertEqual( expected, actual.toRFC3339UTCString(), "incorrect toRFC3339UTCString format" );
     }},
 
+    testFormatUTCSupressFormating: function() {  with(this) {
+      var expected = "20100720T150000Z";
+      var actual = new Date();
+      actual.setUTCFullYear(2010);
+      actual.setUTCMonth(7 - 1);
+      actual.setUTCDate(20);
+      actual.setUTCHours(15);
+      actual.setUTCMinutes(0);
+      actual.setUTCSeconds(0);
+      actual.setUTCMilliseconds(0);  
+      assertEqual( expected, actual.toRFC3339UTCString( true ), "incorrect toRFC3339UTCString format" );
+    }},
+      
+    testFormatUTCForceFormating: function() {  with(this) {
+      var expected = "2010-07-20T15:00:00Z";
+      var actual = new Date();
+      actual.setUTCFullYear(2010);
+      actual.setUTCMonth(7 - 1);
+      actual.setUTCDate(20);
+      actual.setUTCHours(15);
+      actual.setUTCMinutes(0);
+      actual.setUTCSeconds(0);
+      actual.setUTCMilliseconds(0);  
+      assertEqual( expected, actual.toRFC3339UTCString( false ), "incorrect toRFC3339UTCString format" );
+    }},
+
+    testFormatUTCSupressFormatingAndMillis: function() {  with(this) {
+      var expected = "20100720T150000Z";
+      var actual = new Date();
+      actual.setUTCFullYear(2010);
+      actual.setUTCMonth(7 - 1);
+      actual.setUTCDate(20);
+      actual.setUTCHours(15);
+      actual.setUTCMinutes(0);
+      actual.setUTCSeconds(0);
+      actual.setUTCMilliseconds(333);  
+      assertEqual( expected, actual.toRFC3339UTCString( true, true ), "incorrect toRFC3339UTCString format" );
+    }},
+    
+    testFormatUTCForceFormatingAndMillis: function() {  with(this) {
+      var expected = "2010-07-20T15:00:00.333Z";
+      var actual = new Date();
+      actual.setUTCFullYear(2010);
+      actual.setUTCMonth(7 - 1);
+      actual.setUTCDate(20);
+      actual.setUTCHours(15);
+      actual.setUTCMinutes(0);
+      actual.setUTCSeconds(0);
+      actual.setUTCMilliseconds(333);  
+      assertEqual( expected, actual.toRFC3339UTCString( false, false ), "incorrect toRFC3339UTCString format" );
+    }},
+
+    testFormatUTCSupressFormatingAndForceMillis: function() {  with(this) {
+      var expected = "20100720T150000.333Z";
+      var actual = new Date();
+      actual.setUTCFullYear(2010);
+      actual.setUTCMonth(7 - 1);
+      actual.setUTCDate(20);
+      actual.setUTCHours(15);
+      actual.setUTCMinutes(0);
+      actual.setUTCSeconds(0);
+      actual.setUTCMilliseconds(333);  
+      assertEqual( expected, actual.toRFC3339UTCString( true, false ), "incorrect toRFC3339UTCString format" );
+    }},
+    
     testBasicFormatLocal: function() {  with(this) {
       // it is a bit tricky to test this in a way that works in any time zone, 
       // so we are testing that parsing the formated date should get you back the original date
