@@ -94,7 +94,7 @@ Date.parseRFC3339 = function(dString){
     var secs = ( d[11] ? parseInt(d[11],10) : 0 );
     var millis = ( d[12] ? parseFloat(String(1.5).charAt(1) + d[12].slice(1)) * 1000 : 0 );
     if (d[13]) {
-      result = new Date();
+      result = new Date(0);
       result.setUTCFullYear(year);
       result.setUTCMonth(mon);
       result.setUTCDate(day);

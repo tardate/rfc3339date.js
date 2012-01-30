@@ -314,6 +314,55 @@
       var resultReconstituted = Date.parse( resultLocal );
       assertEqual( expected.toUTCString(), resultReconstituted.toUTCString(), "incorrect toRFC3339LocaleString format" );
     }},
+
+    testDayOutOfBounds: function() { with(this){
+      /* case:
+      * if today to 31st, the month to be parsed 
+      * doesnt have the 31st day, it rolls over to the next month
+      */
+
+      //ref old date
+      var _Date = window.Date;
+
+      //date mock
+      window.Date =  function(){
+        if (arguments.length){
+          //pass arguments through
+          return new _Date(arguments);
+        } else {
+          //force today to be...
+          return new _Date(2012, 0, 31, 15, 0, 0, 0);
+        }
+      }
+
+      Date.parseRFC3339 = _Date.parseRFC3339;
+      Date.parse = _Date.parse;
+
+      //sourceString's month doesnt have a 31st
+      var sourceString = "2012-02-05T23:30:00Z";
+      var actual = Date.parse( sourceString );
+
+      var expected = new Date(0);
+      var mon = 1;
+      var year = 2012;
+      var day = 5;
+      var hour = 23;
+      var millis = 0;
+      var secs = 0;
+      var mins = 30;
+
+      //set utc
+      expected.setUTCFullYear(year); 
+      expected.setUTCMonth(mon);     
+      expected.setUTCDate(day);      
+      expected.setUTCHours(hour);    
+      expected.setUTCMinutes(mins);  
+      expected.setUTCSeconds(secs);  
+      expected.setUTCMilliseconds(millis); 
+
+      assertEqual( expected.toUTCString(), actual.toUTCString(), "datejs parse method probably not invoked correctly to convert: '" + sourceString + "'" );
+      window.Date = _Date;
+    }}
                  
   }); 
 // ]]>
