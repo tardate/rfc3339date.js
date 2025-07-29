@@ -7,21 +7,19 @@
     <title>rfc3339date.js - Unit Tests</title>
     <meta name="description" content="Adds ISO 8601 / RFC 3339 date parsing to the Javascript Date object"/>
     <meta name="keywords"    content="javascript,date,rfc2229,ISO8601"/>
-    
+
     <!-- START: for jsunittest -->
     <script src="unit_test_assets/jsunittest.js" type="text/javascript"></script>
     <link rel="stylesheet" href="unit_test_assets/unittest.css" type="text/css" />
     <!-- END: for jsunittest -->
-    
+
     <!-- START: for datejs -->
     <script src="unit_test_assets/libs/date.js" type="text/javascript"></script>
     <!-- END: for datejs -->
-    
+
     <!-- START: for rfc3339date -->
     <script src="rfc3339date.js" type="text/javascript"></script>
-    <!-- END: for jtab -->
-
-
+    <!-- END: for rfc3339date -->
   </head>
   <body>
 
@@ -36,23 +34,22 @@
 
   <!-- Log output (one per Runner, via {testLog: "testlog"} option)-->
   <div id="testlog"></div>
-  
+
   <!-- Put sample/test html here -->
   <div id="sample">
   </div>
 </div>
 
-
 <script type="text/javascript">
 // <![CDATA[
-  
+
   new Test.Unit.Runner({
     setup: function() {
     },
-    
+
     teardown: function() {
     },
-    
+
     testUnitTestFrameworkOperational: function() { with(this) {
       assert(true);
     }},
@@ -91,7 +88,7 @@
       var expected = new Date(2010, 7-1 , 20, 15, 0, 0, 0);
       assertEqual( expected.toString(), actual.toString(), "incorrect conversion of: '" + sourceString + "'" );
     }},
-      
+
     testBasicLocaltimeWithZone: function() {  with(this) {
       var sourceString = "2010-07-20T15:00:00+08:00";
       var actual = Date.parse( sourceString );
@@ -119,7 +116,7 @@
       expected.setUTCMilliseconds(0);
       assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
     }},
-      
+
     testAbbreviateZoneOnlyHours: function() {  with(this) {
       var sourceString = "2010-07-20T15:00:00+08";
       var actual = Date.parse( sourceString );
@@ -147,7 +144,7 @@
       expected.setUTCMilliseconds(0);
       assertEqual( expected.toUTCString(), resultDate.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
     }},
-      
+
     testNotCaseSensitive: function() {  with(this) {
       var sourceString = "20100720t150000z";
       var resultDate = Date.parse( sourceString );
@@ -175,7 +172,7 @@
       expected.setUTCMilliseconds(559);
       assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
     }},
-      
+
     testFractionalSecondsAlternateSeparator: function() {  with(this) {
       var sourceString = "2010-07-20T15:00:00,559Z";
       var actual = Date.parse( sourceString );
@@ -203,7 +200,7 @@
       expected.setUTCMilliseconds(0);
       assertEqual( expected.toUTCString(), actual.toUTCString(), "incorrect conversion of: '" + sourceString + "'" );
     }},
-      
+
     testUTCOptionalSeconds: function() {  with(this) {
       var sourceString = "2010-07-20T15:30Z";
       var actual = Date.parse( sourceString );
@@ -245,7 +242,7 @@
       assertEqual( expected, actual.toRFC3339UTCString(), "incorrect toRFC3339UTCString format" );
     }},
 
-    testFormatUTCSupressFormating: function() {  with(this) {
+    testFormatUTCSuppressFormatting: function() {  with(this) {
       var expected = "20100720T150000Z";
       var actual = new Date();
       actual.setUTCFullYear(2010);
@@ -257,8 +254,8 @@
       actual.setUTCMilliseconds(0);
       assertEqual( expected, actual.toRFC3339UTCString( true ), "incorrect toRFC3339UTCString format" );
     }},
-      
-    testFormatUTCForceFormating: function() {  with(this) {
+
+    testFormatUTCForceFormatting: function() {  with(this) {
       var expected = "2010-07-20T15:00:00Z";
       var actual = new Date();
       actual.setUTCFullYear(2010);
@@ -271,7 +268,7 @@
       assertEqual( expected, actual.toRFC3339UTCString( false ), "incorrect toRFC3339UTCString format" );
     }},
 
-    testFormatUTCSupressFormatingAndMillis: function() {  with(this) {
+    testFormatUTCSuppressFormattingAndMillis: function() {  with(this) {
       var expected = "20100720T150000Z";
       var actual = new Date();
       actual.setUTCFullYear(2010);
@@ -283,8 +280,8 @@
       actual.setUTCMilliseconds(333);
       assertEqual( expected, actual.toRFC3339UTCString( true, true ), "incorrect toRFC3339UTCString format" );
     }},
-    
-    testFormatUTCForceFormatingAndMillis: function() {  with(this) {
+
+    testFormatUTCForceFormattingAndMillis: function() {  with(this) {
       var expected = "2010-07-20T15:00:00.333Z";
       var actual = new Date();
       actual.setUTCFullYear(2010);
@@ -297,7 +294,7 @@
       assertEqual( expected, actual.toRFC3339UTCString( false, false ), "incorrect toRFC3339UTCString format" );
     }},
 
-    testFormatUTCSupressFormatingAndForceMillis: function() {  with(this) {
+    testFormatUTCSuppressFormattingAndForceMillis: function() {  with(this) {
       var expected = "20100720T150000.333Z";
       var actual = new Date();
       actual.setUTCFullYear(2010);
@@ -309,10 +306,10 @@
       actual.setUTCMilliseconds(333);
       assertEqual( expected, actual.toRFC3339UTCString( true, false ), "incorrect toRFC3339UTCString format" );
     }},
- 
+
     testBasicFormatLocal: function() {  with(this) {
       // it is a bit tricky to test this in a way that works in any time zone,
-      // so we are testing that parsing the formated date should get you back the original date
+      // so we are testing that parsing the formatted date should get you back the original date
       var expected = new Date(2010, 7-1 , 20, 15, 0, 0, 0);
       var resultLocal = expected.toRFC3339LocaleString();
       var resultReconstituted = Date.parse( resultLocal );
@@ -345,7 +342,7 @@
     testDayOutOfBounds: function() { with(this){
       /* case:
       * if today to 31st, the month to be parsed
-      * doesnt have the 31st day, it rolls over to the next month
+      * doesn't have the 31st day, it rolls over to the next month
       */
 
       //ref old date
@@ -365,7 +362,7 @@
       Date.parseRFC3339 = _Date.parseRFC3339;
       Date.parse = _Date.parse;
 
-      //sourceString's month doesnt have a 31st
+      //sourceString's month doesn't have a 31st
       var sourceString = "2012-04-31T23:30:00Z";
       var actual = Date.parse( sourceString );
 
@@ -390,7 +387,7 @@
       assertEqual( expected.toUTCString(), actual.toUTCString(), "datejs parse method probably not invoked correctly to convert: '" + sourceString + "'" );
       window.Date = _Date;
     }}
-      
+
   });
 // ]]>
 </script>
